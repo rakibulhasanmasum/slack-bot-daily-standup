@@ -1,0 +1,92 @@
+{
+	"type": "modal",
+	"callback_id": "store_ds_response",
+	"title": {
+		"type": "plain_text",
+		"text": "My App",
+		"emoji": true
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit",
+		"emoji": true
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel",
+		"emoji": true
+	},
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": ":wave: Hey User!\n\nWe kindly request you to take a few moments to provide us with your valuable feedback. Your input is highly appreciated and will help us enhance our processes and create a more fulfilling work experience for everyone involved."
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "input",
+			"block_id": "yesterday",
+			"label": {
+				"type": "plain_text",
+				"text": ":clipboard: Yesterday's Accomplishments",
+				"emoji": true
+			},
+			"element": {
+				"type": "plain_text_input",
+				"multiline": true,
+				"action_id": "yesterday_input",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Enter your accomplishments from yesterday..."
+				}
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "input",
+			"block_id": "today",
+			"label": {
+				"type": "plain_text",
+				"text": ":rocket: Today's Goals",
+				"emoji": true
+			},
+			"element": {
+				"type": "plain_text_input",
+				"multiline": true,
+				"action_id": "today_input",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Enter your goals for today..."
+				}
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "input",
+			"block_id": "blockers",
+			"label": {
+				"type": "plain_text",
+				"text": ":raised_hand: Blockers",
+				"emoji": true
+			},
+			"element": {
+				"type": "plain_text_input",
+				"multiline": true,
+				"action_id": "blockers_input",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Enter any blockers or challenges you're facing..."
+				}
+			},
+			"optional": true
+		}
+	]
+}
