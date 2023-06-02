@@ -3,7 +3,7 @@
 	"callback_id": "store_ds_response",
 	"title": {
 		"type": "plain_text",
-		"text": "My App",
+		"text": "Daily Standup",
 		"emoji": true
 	},
 	"submit": {
