@@ -14,4 +14,14 @@ RUN python -m venv venv && \
 
 COPY . .
 
-CMD ["/app/venv/bin/python", "main.py"]
+# Copy the crontab file into the container
+COPY crontab /etc/cron.d/crontab
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/crontab
+
+# Apply the cron job
+RUN crontab /etc/cron.d/crontab
+
+# Run the command on container startup
+CMD ["/bin/bash", "-c", "source /app/venv/bin/activate && cron && python main.py"]

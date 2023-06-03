@@ -1,0 +1,1 @@
+0 9 * * 0-4 cd /app && /bin/bash -c "source venv/bin/activate && python3 /app/scheduler.py"
