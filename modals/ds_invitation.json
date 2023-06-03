@@ -1,0 +1,27 @@
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": ",\nA friendly reminder to participate in the daily standup. Click the button below to access the standup modal. Thank you for your active participation! -Parsa Nayeem"
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"action_id": "invitation_received",
+					"text": {
+						"type": "plain_text",
+						"emoji": true,
+						"text": "Start Standup"
+					},
+					"style": "primary",
+					"value": "invitation_received"
+				}
+			]
+		}
+	]
+}

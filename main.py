@@ -1,12 +1,13 @@
 import copy
 import os
+
 from slack_bolt import App
+from crontab import CronTab
 
 import json
 from dotenv import load_dotenv
 
 from channel.get import get_channel_id
-from channel.post import post_message
 
 load_dotenv()
 
@@ -27,6 +28,33 @@ def get_user_ids_in_channel(channel_id, client):
             return None
     except Exception as e:
         return None
+
+
+def message_all_users_on_a_channel():
+    channel = get_channel_id(os.environ.get("TARGET_CHANNEL_NAME"), app.client)
+    users = get_user_ids_in_channel(client=app.client, channel_id=channel)
+    for user in users:
+        user_details = app.client.users_info(
+            user=user
+        )
+        f = open('modals/ds_invitation.json')
+        data = json.load(f)
+        blocks = copy.deepcopy(data["blocks"])
+        blocks[0]['text']['text'] = 'Hello ' + user_details['user']['real_name'] + blocks[0]['text']['text']
+        app.client.chat_postMessage(channel=user, text="message from bot", blocks=blocks)
+
+
+@app.action("invitation_received")
+def open_ds_modal_from_invitation(body, ack):
+    ack()
+
+    f = open('modals/request.json')
+    view = json.load(f)
+
+    app.client.views_open(
+        trigger_id=body["trigger_id"],
+        view=view
+    )
 
 
 @app.command("/daily-standup")
@@ -76,7 +104,7 @@ def handle_ds_submission(ack, body, client, view, logger):
         blocks[3]['text']['text'] += today_input
         blocks[4]['text']['text'] += (blocker_input or "").replace('\n', '\n>')
 
-        channel = get_channel_id(channel_name="automation", client=app.client)
+        channel = get_channel_id(channel_name=os.environ.get("TARGET_CHANNEL_NAME"), client=app.client)
         app.client.chat_postMessage(
             channel=channel,
             text="hhh",
@@ -86,6 +114,15 @@ def handle_ds_submission(ack, body, client, view, logger):
         )
     except Exception as e:
         logger.exception(f"Failed to post a message {e}")
+
+
+cron = CronTab(user=os.environ.get("PC_USER"))
+current_dir = os.getcwd()
+file_path = os.path.join(current_dir, 'scheduler.py')
+job = cron.new(command='cd {} && /bin/bash -c "source {} && python3 {}"'.format(current_dir, "venv/bin/activate", file_path))
+job.setall('15 * * * *')
+# job.setall('0 9 * * 0-4')
+cron.write()
 
 
 if __name__ == "__main__":
