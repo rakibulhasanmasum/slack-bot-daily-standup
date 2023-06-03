@@ -116,11 +116,11 @@ def handle_ds_submission(ack, body, client, view, logger):
         logger.exception(f"Failed to post a message {e}")
 
 
-cron = CronTab(user=os.environ.get("PC_USER"))
+cron = CronTab(user=os.environ.get("CRON_USER"))
 current_dir = os.getcwd()
 file_path = os.path.join(current_dir, 'scheduler.py')
-job = cron.new(command='cd {} && /bin/bash -c "source {} && python3 {}"'.format(current_dir, "venv/bin/activate", file_path))
-job.setall('15 * * * *')
+job = cron.new(command='crontab -r && cd {} && /bin/bash -c "source {} && python3 {}"'.format(current_dir, "venv/bin/activate", file_path))
+job.setall('5 * * * *')
 # job.setall('0 9 * * 0-4')
 cron.write()
 

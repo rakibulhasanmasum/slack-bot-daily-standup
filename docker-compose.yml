@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    build: .
+    environment:
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN}
+      SLACK_SIGNING_SECRET: ${SLACK_SIGNING_SECRET}
+      TARGET_CHANNEL_NAME: ${TARGET_CHANNEL_NAME}
+      CRON_USER: ${CRON_USER}
