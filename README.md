@@ -1,6 +1,6 @@
 # slack-bot-daily-standup
 
-![Invitation](screenshots/Screenshot 2023-06-04 at 2.11.37 AM.png)
+![Invitation](screenshots/invitation.png)
 
 ![Model](screenshots/ds.png)
 
