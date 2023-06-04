@@ -1,8 +1,10 @@
 FROM python:3.9-slim-buster
 
 RUN apt-get update && \
-    apt-get install -y cron && \
+    apt-get install -y vim cron tzdata && \
     rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Asia/Dhaka
 
 WORKDIR /app
 
@@ -12,14 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Copy the crontab file into the container
 COPY crontab /etc/cron.d/crontab
 
-# Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/crontab
 
-# Apply the cron job
 RUN crontab /etc/cron.d/crontab
 
-# Run the command on container startup
-CMD ["/bin/bash", "-c", "cron && python main.py"]
+CMD ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && service cron start && python main.py
